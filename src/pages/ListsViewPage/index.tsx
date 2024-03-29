@@ -1,7 +1,8 @@
 import { useState } from 'react';
 // import { Link } from 'react-router-dom';
-import { CreateList } from '../../components/createList';
+import { CreateList } from '../../components/CreateList';
 import { ShoppingList } from '../../types';
+import { EditList } from '../../components/EditList';
 
 const initialLists: ShoppingList[] = [
   {
@@ -31,14 +32,14 @@ export const ListsViewPage = (): JSX.Element => {
   const [lists, setLists] = useState<ShoppingList[]>(initialLists);
   const [action, setAction] = useState<string>('listsView');
 
+  console.log(lists);
+  console.log(action);
+
   const deleteList = (index: number): void => {
     const newLists = [...lists];
     newLists.splice(index, 1);
     setLists(newLists);
   };
-
-  console.log(lists);
-  console.log(action);
 
   const createList = () => {
     setAction('createList');
@@ -49,12 +50,12 @@ export const ListsViewPage = (): JSX.Element => {
     setAction('listsView');
   };
 
-  const navigateToListsView = () => {
-    setAction('listsView');
-  };
-
   const editList = () => {
     setAction('editList');
+  };
+
+  const navigateToListsView = () => {
+    setAction('listsView');
   };
 
   return (
@@ -65,7 +66,7 @@ export const ListsViewPage = (): JSX.Element => {
           navigateToListsView={navigateToListsView}
         />
       ) : action === 'editList' ? (
-        <p>Tato komponenta upravuje stávající seznam.</p>
+        <EditList navigateToListsView={navigateToListsView} />
       ) : (
         <>
           <h2>Nákupní seznamy</h2>
