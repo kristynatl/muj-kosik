@@ -53,6 +53,15 @@ export const ListsViewPage = (): JSX.Element => {
     setAction('createList');
   };
 
+  const addNewList = (newList: ShoppingList) => {
+    setLists([...lists, newList]);
+    setAction('listsView');
+  };
+
+  const navigateToListsView = () => {
+    setAction('listsView');
+  };
+
   const editList = () => {
     setAction('editList');
   };
@@ -60,7 +69,10 @@ export const ListsViewPage = (): JSX.Element => {
   return (
     <>
       {action === 'createList' ? (
-        <CreateList />
+        <CreateList
+          addNewList={addNewList}
+          navigateToListsView={() => navigateToListsView}
+        />
       ) : action === 'editList' ? (
         <p>Tato komponenta upravuje stávající seznam.</p>
       ) : (

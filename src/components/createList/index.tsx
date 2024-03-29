@@ -1,12 +1,35 @@
 import { useState } from 'react';
 
-export const CreateList = (): JSX.Element => {
+interface Props {
+  addNewList: (newList: ShoppingList) => void;
+  navigateToListsView: () => void;
+}
+
+interface ListItem {
+  name: string;
+  amount: string;
+}
+
+interface ShoppingList {
+  name: string;
+  items: ListItem[];
+}
+
+export const CreateList = ({
+  addNewList,
+  navigateToListsView,
+}: Props): JSX.Element => {
   const [name, setName] = useState<string>('');
 
   const handleCreateList = (): void => {
-    const newList = name.trim();
-    if (newList) {
-      console.log(newList);
+    const newList: ShoppingList = {
+      name: name.trim(),
+      items: [],
+    };
+
+    if (newList.name !== '') {
+      addNewList(newList);
+      navigateToListsView();
     }
   };
 
