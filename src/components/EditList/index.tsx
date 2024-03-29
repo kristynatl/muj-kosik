@@ -1,17 +1,35 @@
 import { useState } from 'react';
-// import { ShoppingList } from '../../types';
+import { ShoppingList } from '../../types';
 
 interface Props {
+  list: ShoppingList;
   navigateToListsView: () => void;
+  updateList: (updatedList: ShoppingList, index: number) => void;
+  index: number;
 }
 
-export const EditList = ({ navigateToListsView }: Props) => {
-  const [name, setName] = useState('');
+export const EditList = ({
+  navigateToListsView,
+  list,
+  updateList,
+  index,
+}: Props) => {
+  const [name, setName] = useState(list.name);
 
-  const handleEditList = () => {
-    const newList = name.trim();
-    if (newList) {
-      console.log(newList);
+  const handleNameChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ): void => {
+    setName(event.target.value);
+  };
+
+  const handleSaveList = (list: ShoppingList): void => {
+    const updatedList: ShoppingList = {
+      name: name.trim(),
+      items: list.items,
+    };
+    if (updatedList.name !== '') {
+      updateList(updatedList, index);
+      navigateToListsView();
     }
   };
 
@@ -25,15 +43,9 @@ export const EditList = ({ navigateToListsView }: Props) => {
       </p>
       <h2>Úprava seznamu</h2>
       <label>
-        Název:{' '}
-        <input
-          value={name}
-          onChange={(e) => {
-            setName(e.target.value);
-          }}
-        />
+        Název: <input value={name} onChange={handleNameChange} />
       </label>
-      <button onClick={handleEditList}>Upravit</button>
+      <button onClick={() => handleSaveList(list)}>Upravit</button>
     </>
   );
 };
