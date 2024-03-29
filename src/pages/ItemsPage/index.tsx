@@ -1,3 +1,3 @@
 export const ItemsPage = (): JSX.Element => {
-  return <></>;
+  return <>Tady budou položky seznamu</>;
 };

@@ -1,6 +1,7 @@
 interface ListItem {
   name: string;
   amount: string;
+  bought: boolean;
 }
 
 export interface ShoppingList {

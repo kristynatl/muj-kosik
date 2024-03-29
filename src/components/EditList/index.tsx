@@ -39,9 +39,9 @@ export const EditList = ({
         <span className="navigate" onClick={navigateToListsView}>
           Nákupní seznamy
         </span>{' '}
-        &gt; Úprava seznamu "{name}"
+        &gt; Úprava seznamu
       </p>
-      <h2>Úprava seznamu</h2>
+      <h2>Úprava seznamu "{name}"</h2>
       <label>
         Název: <input value={name} onChange={handleNameChange} />
       </label>
