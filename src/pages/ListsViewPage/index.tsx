@@ -3,30 +3,7 @@ import { Link } from 'react-router-dom';
 import { CreateList } from '../../components/CreateList';
 import { ShoppingList } from '../../types';
 import { EditList } from '../../components/EditList';
-
-const initialLists: ShoppingList[] = [
-  {
-    name: 'Velikonoční nákup',
-    items: [
-      { name: 'Vajíčka', amount: '10 ks', bought: true },
-      { name: 'Mouka', amount: '1 kg', bought: false },
-    ],
-  },
-  {
-    name: 'Nákup na chatu',
-    items: [
-      { name: 'Pivo', amount: '6 ks', bought: false },
-      { name: 'Grilovací maso', amount: '2 kg', bought: false },
-    ],
-  },
-  {
-    name: 'Drogerie',
-    items: [
-      { name: 'Šampon', amount: '1 ks', bought: true },
-      { name: 'Toaletní papír', amount: '10 rolí', bought: true },
-    ],
-  },
-];
+import { initialLists } from '../../types';
 
 export const ListsViewPage = (): JSX.Element => {
   const [lists, setLists] = useState<ShoppingList[]>(initialLists);
@@ -71,6 +48,7 @@ export const ListsViewPage = (): JSX.Element => {
         <CreateList
           addNewList={addNewList}
           navigateToListsView={navigateToListsView}
+          currentLists={lists}
         />
       ) : action === 'editList' ? (
         <EditList
@@ -88,9 +66,9 @@ export const ListsViewPage = (): JSX.Element => {
           {lists.map((list, index) => {
             return (
               <div className="shopitem" key={index}>
-                <Link to={`/${encodeURIComponent(list.name)}`}>
-                  <div className="shopitem__name">{list.name}</div>
-                </Link>
+                <div className="shopitem__name">
+                  {list.id}. <Link to={`/${list.id}`}>{list.name}</Link>
+                </div>
                 <button
                   className="btn-edit"
                   onClick={() => handleEditList(index)}

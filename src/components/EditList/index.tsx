@@ -24,6 +24,7 @@ export const EditList = ({
 
   const handleSaveList = (list: ShoppingList): void => {
     const updatedList: ShoppingList = {
+      id: list.id,
       name: name.trim(),
       items: list.items,
     };

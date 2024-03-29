@@ -4,16 +4,19 @@ import { ShoppingList } from '../../types';
 interface Props {
   addNewList: (newList: ShoppingList) => void;
   navigateToListsView: () => void;
+  currentLists: ShoppingList[];
 }
 
 export const CreateList = ({
   addNewList,
   navigateToListsView,
+  currentLists,
 }: Props): JSX.Element => {
   const [name, setName] = useState<string>('');
 
   const handleCreateList = (): void => {
     const newList: ShoppingList = {
+      id: currentLists.length + 1,
       name: name.trim(),
       items: [],
     };
@@ -21,6 +24,7 @@ export const CreateList = ({
     if (newList.name !== '') {
       addNewList(newList);
       navigateToListsView();
+      console.log(newList.id);
     }
   };
 
