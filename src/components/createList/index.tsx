@@ -36,8 +36,10 @@ export const CreateList = ({
   return (
     <>
       <p>
-        <span className="navigate">Nákupní seznamy</span> &gt; Vytvoření nového
-        seznamu
+        <span className="navigate" onClick={navigateToListsView}>
+          Nákupní seznamy
+        </span>{' '}
+        &gt; Vytvoření nového seznamu
       </p>
       <h2>Vytvoření nového seznamu</h2>
       <label>

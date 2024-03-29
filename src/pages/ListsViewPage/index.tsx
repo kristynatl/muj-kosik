@@ -71,7 +71,7 @@ export const ListsViewPage = (): JSX.Element => {
       {action === 'createList' ? (
         <CreateList
           addNewList={addNewList}
-          navigateToListsView={() => navigateToListsView}
+          navigateToListsView={navigateToListsView}
         />
       ) : action === 'editList' ? (
         <p>Tato komponenta upravuje stávající seznam.</p>
