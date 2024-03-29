@@ -1,18 +1,9 @@
 import { useState } from 'react';
+import { ShoppingList } from '../../types';
 
 interface Props {
   addNewList: (newList: ShoppingList) => void;
   navigateToListsView: () => void;
-}
-
-interface ListItem {
-  name: string;
-  amount: string;
-}
-
-interface ShoppingList {
-  name: string;
-  items: ListItem[];
 }
 
 export const CreateList = ({

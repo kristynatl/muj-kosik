@@ -1,16 +1,7 @@
 import { useState } from 'react';
 // import { Link } from 'react-router-dom';
 import { CreateList } from '../../components/createList';
-
-interface ListItem {
-  name: string;
-  amount: string;
-}
-
-interface ShoppingList {
-  name: string;
-  items: ListItem[];
-}
+import { ShoppingList } from '../../types';
 
 const initialLists: ShoppingList[] = [
   {
