@@ -104,3 +104,9 @@ input[type="text"] {
 .btn-delete {
   padding: 6px 10px;
 }
+
+.navigate {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}

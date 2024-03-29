@@ -1,5 +1,6 @@
 import { useState } from 'react';
 // import { Link } from 'react-router-dom';
+import { CreateList } from '../../components/createList';
 
 interface ListItem {
   name: string;
@@ -59,7 +60,7 @@ export const ListsViewPage = (): JSX.Element => {
   return (
     <>
       {action === 'createList' ? (
-        <p>Tato komponenta vytváří nový seznam.</p>
+        <CreateList />
       ) : action === 'editList' ? (
         <p>Tato komponenta upravuje stávající seznam.</p>
       ) : (
