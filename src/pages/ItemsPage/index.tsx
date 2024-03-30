@@ -48,7 +48,7 @@ export const ItemsPage = (): JSX.Element => {
 
     if (isDuplicate) {
       alert(`${nameInput} se již v seznamu nachází`);
-    } else {
+    } else if (nameInput !== '') {
       setItemsList([...itemsList, newItem]);
       setNameInput('');
       setAmountInput('');
