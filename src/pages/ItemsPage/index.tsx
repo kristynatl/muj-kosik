@@ -2,6 +2,7 @@ import { initialLists } from '../../types';
 import { useParams } from 'react-router';
 import { useState } from 'react';
 import { ListItem, ShoppingList } from '../../types';
+import { Link } from 'react-router-dom';
 
 export const ItemsPage = (): JSX.Element => {
   const { seznam } = useParams();
@@ -48,8 +49,14 @@ export const ItemsPage = (): JSX.Element => {
 
   return (
     <>
+      <p>
+        <Link to="/" className="navigate">
+          Nákupní seznamy
+        </Link>{' '}
+        &gt; Úprava položek seznamu
+      </p>
       <form className="newitem-form">
-        <h2>Můj nákupní seznam</h2>
+        <h2>{chosenList?.name}</h2>
         <label htmlFor="input-name">Položka</label>
         <input
           id="input-name"
