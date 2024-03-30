@@ -1,18 +1,16 @@
 import { initialLists } from '../../types';
 import { useParams } from 'react-router';
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import { ListItem, ShoppingList } from '../../types';
 import { Link } from 'react-router-dom';
 
 export const ItemsPage = (): JSX.Element => {
   const { seznam } = useParams();
-  console.log(seznam);
 
   const chosenList: ShoppingList | undefined = initialLists.find(
     (list) => list.id === Number(seznam),
   );
 
-  console.log(chosenList);
   const [nameInput, setNameInput] = useState<string>('');
   const [amountInput, setAmountInput] = useState<string>('');
   const [itemsList, setItemsList] = useState<ListItem[]>(
@@ -54,7 +52,6 @@ export const ItemsPage = (): JSX.Element => {
       setItemsList([...itemsList, newItem]);
       setNameInput('');
       setAmountInput('');
-      console.log(itemsList);
     }
   };
 
@@ -70,17 +67,27 @@ export const ItemsPage = (): JSX.Element => {
     setItemsList(newList);
   };
 
+  const updateItemName = (index: number, newName: string): void => {
+    const updatedList = [...itemsList];
+    updatedList[index].name = newName;
+    setItemsList(updatedList);
+  };
+
+  const updateItemAmount = (index: number, newAmount: string): void => {
+    const updatedList = [...itemsList];
+    updatedList[index].amount = newAmount;
+    setItemsList(updatedList);
+  };
+
   const startEditing = (index: number) => {
     setIsEditing(!isEditing);
     setEditIndex(index);
   };
 
-  const finishEditing = () => {
-    setIsEditing(false);
-    setEditIndex(-1);
-  };
-
-  const cancelEditing = () => {
+  const finishEditing = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ): void => {
+    event.preventDefault();
     setIsEditing(false);
     setEditIndex(-1);
   };
@@ -122,8 +129,8 @@ export const ItemsPage = (): JSX.Element => {
             tickClass += ' btn-tick--on';
           }
           return (
-            <>
-              <div className="shopitem" key={index}>
+            <Fragment key={index}>
+              <div className="shopitem">
                 <button
                   className={`${tickClass} shopitem__tick`}
                   onClick={() => toggleItemBought(index)}
@@ -150,24 +157,24 @@ export const ItemsPage = (): JSX.Element => {
                     id="input-name"
                     type="text"
                     value={item.name}
-                    onChange={(e) => setNameInput(e.target.value)}
+                    onChange={(e) => updateItemName(index, e.target.value)}
                   />
                   <label htmlFor="input-amount">Množství</label>
                   <input
                     id="input-amount"
                     type="text"
                     value={item.amount}
-                    onChange={(e) => setAmountInput(e.target.value)}
+                    onChange={(e) => updateItemAmount(index, e.target.value)}
                   />
                   <button className="btn-add" onClick={finishEditing}>
                     Upravit
                   </button>
-                  <button className="btn-add" onClick={cancelEditing}>
+                  <button className="btn-add" onClick={finishEditing}>
                     Zrušit
                   </button>
                 </form>
               )}
-            </>
+            </Fragment>
           );
         })}
       </div>
