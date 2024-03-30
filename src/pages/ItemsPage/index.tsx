@@ -69,6 +69,9 @@ export const ItemsPage = (): JSX.Element => {
       alert(`${nameInput} se již v seznamu nachází`);
     } else if (nameInput !== '') {
       setItemsList([...itemsList, newItem]);
+      if (chosenList) {
+        chosenList.items.push(newItem);
+      }
       setNameInput('');
       setAmountInput('');
     }
