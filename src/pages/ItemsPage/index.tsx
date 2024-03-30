@@ -20,9 +20,9 @@ export const ItemsPage = (): JSX.Element => {
   const [editIndex, setEditIndex] = useState<number>(-1);
   const [originalNames, setOriginalNames] = useState<string[]>([]);
   const [originalAmounts, setOriginalAmounts] = useState<string[]>([]);
+  const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
 
   useEffect(() => {
-    // Při změně seznamu nastavit nové původní hodnoty
     if (chosenList) {
       const names = chosenList.items.map((item) => item.name);
       const amounts = chosenList.items.map((item) => item.amount);
@@ -107,12 +107,31 @@ export const ItemsPage = (): JSX.Element => {
   const cancelEditing = (
     originalName: string,
     originalAmount: string,
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ): void => {
-    // event.preventDefault();
+    event.preventDefault();
     setIsEditing(false);
     setEditIndex(-1);
     updateItemName(editIndex, originalName);
     updateItemAmount(editIndex, originalAmount);
+  };
+
+  const handleDragStart = (index: number) => {
+    setDraggedIndex(index);
+  };
+
+  const handleDragOver = (index: number) => {
+    if (draggedIndex === null) return;
+    const newItems = [...itemsList];
+    const draggedItem = newItems[draggedIndex];
+    newItems.splice(draggedIndex, 1);
+    newItems.splice(index, 0, draggedItem);
+    setItemsList(newItems);
+    setDraggedIndex(index);
+  };
+
+  const handleDrop = () => {
+    setDraggedIndex(null);
   };
 
   return (
@@ -153,7 +172,13 @@ export const ItemsPage = (): JSX.Element => {
           }
           return (
             <Fragment key={index}>
-              <div className="shopitem">
+              <div
+                className="shopitem"
+                draggable
+                onDragStart={() => handleDragStart(index)}
+                onDragOver={() => handleDragOver(index)}
+                onDrop={handleDrop}
+              >
                 <button
                   className={`${tickClass} shopitem__tick`}
                   onClick={() => toggleItemBought(index)}
@@ -193,18 +218,19 @@ export const ItemsPage = (): JSX.Element => {
                     <button className="btn-add" onClick={finishEditing}>
                       Upravit
                     </button>
+                    <button
+                      className="btn-add"
+                      onClick={(e) =>
+                        cancelEditing(
+                          originalNames[index],
+                          originalAmounts[index],
+                          e,
+                        )
+                      }
+                    >
+                      Zrušit
+                    </button>
                   </form>
-                  <button
-                    className="btn-add"
-                    onClick={() =>
-                      cancelEditing(
-                        originalNames[index],
-                        originalAmounts[index],
-                      )
-                    }
-                  >
-                    Zrušit
-                  </button>
                 </div>
               )}
             </Fragment>
