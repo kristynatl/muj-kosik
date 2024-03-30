@@ -29,10 +29,31 @@ export const ItemsPage = (): JSX.Element => {
       bought: false,
     };
 
-    setItemsList([...itemsList, newItem]);
-    setNameInput('');
-    setAmountInput('');
-    console.log(itemsList);
+    let isDuplicate: boolean = false;
+
+    if (chosenList !== undefined) {
+      isDuplicate = chosenList?.items.some((item) => {
+        const normalizedInputName: string = nameInput
+          .toLowerCase()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '');
+
+        const normalizedItemName: string = item.name
+          .toLowerCase()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '');
+        return normalizedItemName === normalizedInputName;
+      });
+    }
+
+    if (isDuplicate) {
+      alert(`${nameInput} se již v seznamu nachází`);
+    } else {
+      setItemsList([...itemsList, newItem]);
+      setNameInput('');
+      setAmountInput('');
+      console.log(itemsList);
+    }
   };
 
   const deleteItem = (index: number) => {
