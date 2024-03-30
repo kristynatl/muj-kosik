@@ -1,6 +1,6 @@
 import { initialLists } from '../../types';
 import { useParams } from 'react-router';
-import { Fragment, useState } from 'react';
+import { Fragment, useState, useEffect } from 'react';
 import { ListItem, ShoppingList } from '../../types';
 import { Link } from 'react-router-dom';
 
@@ -18,6 +18,18 @@ export const ItemsPage = (): JSX.Element => {
   );
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [editIndex, setEditIndex] = useState<number>(-1);
+  const [originalNames, setOriginalNames] = useState<string[]>([]);
+  const [originalAmounts, setOriginalAmounts] = useState<string[]>([]);
+
+  useEffect(() => {
+    // Při změně seznamu nastavit nové původní hodnoty
+    if (chosenList) {
+      const names = chosenList.items.map((item) => item.name);
+      const amounts = chosenList.items.map((item) => item.amount);
+      setOriginalNames(names);
+      setOriginalAmounts(amounts);
+    }
+  }, [chosenList]);
 
   const addItem = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -92,6 +104,17 @@ export const ItemsPage = (): JSX.Element => {
     setEditIndex(-1);
   };
 
+  const cancelEditing = (
+    originalName: string,
+    originalAmount: string,
+  ): void => {
+    // event.preventDefault();
+    setIsEditing(false);
+    setEditIndex(-1);
+    updateItemName(editIndex, originalName);
+    updateItemAmount(editIndex, originalAmount);
+  };
+
   return (
     <>
       <p>
@@ -151,28 +174,38 @@ export const ItemsPage = (): JSX.Element => {
                 </button>
               </div>
               {isEditing && editIndex === index && (
-                <form className="edititem-form">
-                  <label htmlFor="input-name">Položka</label>
-                  <input
-                    id="input-name"
-                    type="text"
-                    value={item.name}
-                    onChange={(e) => updateItemName(index, e.target.value)}
-                  />
-                  <label htmlFor="input-amount">Množství</label>
-                  <input
-                    id="input-amount"
-                    type="text"
-                    value={item.amount}
-                    onChange={(e) => updateItemAmount(index, e.target.value)}
-                  />
-                  <button className="btn-add" onClick={finishEditing}>
-                    Upravit
-                  </button>
-                  <button className="btn-add" onClick={finishEditing}>
+                <div className="edititem-form">
+                  <form>
+                    <label htmlFor="input-name">Položka</label>
+                    <input
+                      id="input-name"
+                      type="text"
+                      value={item.name}
+                      onChange={(e) => updateItemName(index, e.target.value)}
+                    />
+                    <label htmlFor="input-amount">Množství</label>
+                    <input
+                      id="input-amount"
+                      type="text"
+                      value={item.amount}
+                      onChange={(e) => updateItemAmount(index, e.target.value)}
+                    />
+                    <button className="btn-add" onClick={finishEditing}>
+                      Upravit
+                    </button>
+                  </form>
+                  <button
+                    className="btn-add"
+                    onClick={() =>
+                      cancelEditing(
+                        originalNames[index],
+                        originalAmounts[index],
+                      )
+                    }
+                  >
                     Zrušit
                   </button>
-                </form>
+                </div>
               )}
             </Fragment>
           );
