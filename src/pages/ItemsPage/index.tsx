@@ -95,6 +95,7 @@ export const ItemsPage = (): JSX.Element => {
       </p>
       <form className="newitem-form">
         <h2>{chosenList?.name}</h2>
+        <h3>Co nakoupit:</h3>
         <label htmlFor="input-name">Položka</label>
         <input
           id="input-name"
@@ -143,7 +144,7 @@ export const ItemsPage = (): JSX.Element => {
                 </button>
               </div>
               {isEditing && editIndex === index && (
-                <form>
+                <form className="edititem-form">
                   <label htmlFor="input-name">Položka</label>
                   <input
                     id="input-name"

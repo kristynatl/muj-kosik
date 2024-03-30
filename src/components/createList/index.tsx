@@ -46,7 +46,9 @@ export const CreateList = ({
           }}
         />
       </label>
-      <button onClick={handleCreateList}>Vytvořit</button>
+      <button className="btn-delete" onClick={handleCreateList}>
+        Vytvořit
+      </button>
     </>
   );
 };

@@ -20,10 +20,11 @@ body {
 }
 
 .container {
-  max-width: 25rem;
-  padding: 0 1rem;
+  max-width: 30rem;
+  padding: 2rem;
   margin-left: auto;
   margin-right: auto;
+  background-color: #f5f2ed;
 }
 
 .shoplist {
@@ -38,6 +39,12 @@ body {
   padding: 1rem;
   margin-bottom: 0.5rem;
   /* border-radius: 5px; */
+}
+
+h1,
+h2,
+h3 {
+  color: #444;
 }
 
 button {
@@ -86,23 +93,31 @@ input[type="text"] {
   margin-top: 2rem;
 }
 
+.edititem-form {
+  background-color: #e0dacd;
+  margin-bottom: 1.5rem;
+  padding: 15px;
+}
+
 .btn-add {
   padding: 0.5rem 1rem;
   font-size: 1rem;
+  margin: 5px
 }
 
 .btn-create {
-  color: black;
+  color: #444;
   font-size: 1.2rem;
   font-weight: bold;
   margin: 30px 0;
   padding: 15px;
-  background-color: rgb(233, 190, 82);
-  border: 1px solid rgb(117, 117, 117);
+  background-color: white;
+  border: 1px solid #444;
 }
 
 .btn-delete {
   padding: 6px 10px;
+  margin-left: 5px;
 }
 
 .navigate {
