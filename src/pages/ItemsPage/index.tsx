@@ -22,6 +22,13 @@ export const ItemsPage = (): JSX.Element => {
   const [originalAmounts, setOriginalAmounts] = useState<string[]>([]);
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
 
+  const allItems: ListItem[] = initialLists.reduce(
+    (accumulator: ListItem[], currentList: ShoppingList) => {
+      return accumulator.concat(currentList.items);
+    },
+    [],
+  );
+
   useEffect(() => {
     if (chosenList) {
       const names = chosenList.items.map((item) => item.name);
@@ -151,7 +158,13 @@ export const ItemsPage = (): JSX.Element => {
           type="text"
           value={nameInput}
           onChange={(e) => setNameInput(e.target.value)}
+          list="item-list"
         />
+        <datalist id="item-list">
+          {allItems.map((item, index) => (
+            <option key={index} value={item.name} />
+          ))}
+        </datalist>
         <label htmlFor="input-amount">Množství</label>
         <input
           id="input-amount"
