@@ -18,6 +18,8 @@ export const ItemsPage = (): JSX.Element => {
   const [itemsList, setItemsList] = useState<ListItem[]>(
     chosenList ? chosenList.items : [],
   );
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [editIndex, setEditIndex] = useState<number>(-1);
 
   const addItem = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -68,6 +70,21 @@ export const ItemsPage = (): JSX.Element => {
     setItemsList(newList);
   };
 
+  const startEditing = (index: number) => {
+    setIsEditing(!isEditing);
+    setEditIndex(index);
+  };
+
+  const finishEditing = () => {
+    setIsEditing(false);
+    setEditIndex(-1);
+  };
+
+  const cancelEditing = () => {
+    setIsEditing(false);
+    setEditIndex(-1);
+  };
+
   return (
     <>
       <p>
@@ -104,18 +121,52 @@ export const ItemsPage = (): JSX.Element => {
             tickClass += ' btn-tick--on';
           }
           return (
-            <div className="shopitem" key={index}>
-              <button
-                className={`${tickClass} shopitem__tick`}
-                onClick={() => toggleItemBought(index)}
-              ></button>
-              <div className="shopitem__name">{item.name}</div>
-              <div className="shopitem__amount">{item.amount}</div>
-              <button className="btn-edit">✏️</button>
-              <button className="btn-delete" onClick={() => deleteItem(index)}>
-                Smazat
-              </button>
-            </div>
+            <>
+              <div className="shopitem" key={index}>
+                <button
+                  className={`${tickClass} shopitem__tick`}
+                  onClick={() => toggleItemBought(index)}
+                ></button>
+                <div className="shopitem__name">{item.name}</div>
+                <div className="shopitem__amount">{item.amount}</div>
+                <button
+                  className="btn-edit"
+                  onClick={() => startEditing(index)}
+                >
+                  ✏️
+                </button>
+                <button
+                  className="btn-delete"
+                  onClick={() => deleteItem(index)}
+                >
+                  Smazat
+                </button>
+              </div>
+              {isEditing && editIndex === index && (
+                <form>
+                  <label htmlFor="input-name">Položka</label>
+                  <input
+                    id="input-name"
+                    type="text"
+                    value={item.name}
+                    onChange={(e) => setNameInput(e.target.value)}
+                  />
+                  <label htmlFor="input-amount">Množství</label>
+                  <input
+                    id="input-amount"
+                    type="text"
+                    value={item.amount}
+                    onChange={(e) => setAmountInput(e.target.value)}
+                  />
+                  <button className="btn-add" onClick={finishEditing}>
+                    Upravit
+                  </button>
+                  <button className="btn-add" onClick={cancelEditing}>
+                    Zrušit
+                  </button>
+                </form>
+              )}
+            </>
           );
         })}
       </div>
