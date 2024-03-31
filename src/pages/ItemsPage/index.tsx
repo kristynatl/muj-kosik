@@ -108,10 +108,35 @@ export const ItemsPage = (): JSX.Element => {
 
   const finishEditing = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    newName: string,
   ): void => {
     event.preventDefault();
-    setIsEditing(false);
-    setEditIndex(-1);
+
+    let isDuplicate: boolean = false;
+
+    if (chosenList !== undefined) {
+      isDuplicate = chosenList?.items
+        .filter((_, index) => index !== editIndex)
+        .some((item) => {
+          const normalizedNewName: string = newName
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '');
+
+          const normalizedItemName: string = item.name
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '');
+          return normalizedItemName === normalizedNewName;
+        });
+    }
+
+    if (isDuplicate) {
+      alert(`${newName} se již v seznamu nachází`);
+    } else if (newName !== '') {
+      setIsEditing(false);
+      setEditIndex(-1);
+    }
   };
 
   const cancelEditing = (
@@ -231,7 +256,10 @@ export const ItemsPage = (): JSX.Element => {
                       value={item.amount}
                       onChange={(e) => updateItemAmount(index, e.target.value)}
                     />
-                    <button className="btn-add" onClick={finishEditing}>
+                    <button
+                      className="btn-add"
+                      onClick={(e) => finishEditing(e, item.name)}
+                    >
                       Upravit
                     </button>
                     <button
