@@ -244,7 +244,7 @@ export const ItemsPage = (): JSX.Element => {
                   className="btn-delete"
                   onClick={() => deleteItem(index)}
                 >
-                  Smazat
+                  ❌
                 </button>
               </div>
               {isEditing && editIndex === index && (

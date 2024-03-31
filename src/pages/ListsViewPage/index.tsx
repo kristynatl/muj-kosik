@@ -79,7 +79,7 @@ export const ListsViewPage = (): JSX.Element => {
                   className="btn-delete"
                   onClick={() => handleDeleteList(index)}
                 >
-                  Smazat
+                  ❌
                 </button>
               </div>
             );
