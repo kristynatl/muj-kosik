@@ -102,8 +102,14 @@ export const ItemsPage = (): JSX.Element => {
   };
 
   const startEditing = (index: number) => {
-    setIsEditing(!isEditing);
-    setEditIndex(index);
+    if (isEditing && editIndex !== index) {
+      itemsList[editIndex].name = originalNames[editIndex];
+      itemsList[editIndex].amount = originalAmounts[editIndex];
+      setEditIndex(index);
+    } else {
+      setIsEditing(!isEditing);
+      setEditIndex(index);
+    }
   };
 
   const finishEditing = (
@@ -207,14 +213,16 @@ export const ItemsPage = (): JSX.Element => {
       <div className="shoplist">
         {itemsList.map((item, index) => {
           let tickClass = 'btn-tick';
+          let boughtClass = '';
 
           if (item.bought) {
             tickClass += ' btn-tick--on';
+            boughtClass = ' bought';
           }
           return (
             <Fragment key={index}>
               <div
-                className="shopitem"
+                className={`shopitem${boughtClass}`}
                 draggable
                 onDragStart={() => handleDragStart(index)}
                 onDragOver={() => handleDragOver(index)}

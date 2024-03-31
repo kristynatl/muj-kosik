@@ -38,7 +38,10 @@ body {
   background-color: #f4df98;
   padding: 1rem;
   margin-bottom: 0.5rem;
-  /* border-radius: 5px; */
+}
+
+.bought {
+  background-color: #f0eade;
 }
 
 h1,
