@@ -46,7 +46,9 @@ export const EditList = ({
       <label>
         Název: <input value={name} onChange={handleNameChange} />
       </label>
-      <button onClick={() => handleSaveList(list)}>Upravit</button>
+      <button className="btn-delete" onClick={() => handleSaveList(list)}>
+        Upravit
+      </button>
     </>
   );
 };

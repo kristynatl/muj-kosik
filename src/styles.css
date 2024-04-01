@@ -119,10 +119,11 @@ input[type="text"] {
 }
 
 .btn-delete {
-  /* padding: 6px 10px; */
   margin-left: 5px;
   border: 1px solid #444;
   background-color: white;
+  color: #444;
+  font-weight: bold;
 }
 
 .navigate {
