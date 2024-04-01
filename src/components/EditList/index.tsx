@@ -14,7 +14,7 @@ export const EditList = ({
   updateList,
   index,
 }: Props) => {
-  const [name, setName] = useState(list.name);
+  const [name, setName] = useState<string>(list.name);
 
   const handleNameChange = (
     event: React.ChangeEvent<HTMLInputElement>,

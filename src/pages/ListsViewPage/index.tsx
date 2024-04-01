@@ -1,17 +1,15 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+
+import { initialLists, ShoppingList } from '../../types';
+
 import { CreateList } from '../../components/CreateList';
-import { ShoppingList } from '../../types';
 import { EditList } from '../../components/EditList';
-import { initialLists } from '../../types';
 
 export const ListsViewPage = (): JSX.Element => {
   const [lists, setLists] = useState<ShoppingList[]>(initialLists);
   const [action, setAction] = useState<string>('listsView');
   const [editingIndex, setEditingIndex] = useState<number>(0);
-
-  console.log(lists);
-  console.log(action);
 
   const handleDeleteList = (index: number): void => {
     const newLists = [...lists];
@@ -19,7 +17,7 @@ export const ListsViewPage = (): JSX.Element => {
     setLists(newLists);
   };
 
-  const handleCreateList = () => {
+  const handleCreateList = (): void => {
     setAction('createList');
   };
 
@@ -28,17 +26,17 @@ export const ListsViewPage = (): JSX.Element => {
     setAction('editList');
   };
 
-  const addNewList = (newList: ShoppingList) => {
+  const addNewList = (newList: ShoppingList): void => {
     setLists([...lists, newList]);
     setAction('listsView');
   };
 
-  const updateList = (updatedList: ShoppingList, index: number) => {
+  const updateList = (updatedList: ShoppingList, index: number): void => {
     lists[index] = updatedList;
     setAction('listsView');
   };
 
-  const navigateToListsView = () => {
+  const navigateToListsView = (): void => {
     setAction('listsView');
   };
 
